@@ -5,7 +5,6 @@ import com.ajudabem.backend.dto.news.response.ResponseNewsDTO;
 import com.ajudabem.backend.model.News;
 import com.ajudabem.backend.model.User;
 import com.ajudabem.backend.repository.NewsRepository;
-import com.ajudabem.backend.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -19,11 +18,10 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class NewsService {
 
-    private final UserRepository userRepository;
     private final NewsRepository newsRepository;
 
     public List<ResponseNewsDTO> getNews () {
-        var allNews = newsRepository.findAllByDeletedTrue();
+        var allNews = newsRepository.findAllByDeletedFalse();
         return allNews.stream().map(news -> new ResponseNewsDTO(
                 news.getId(),
                 news.getTitle(),
